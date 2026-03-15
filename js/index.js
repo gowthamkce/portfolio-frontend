@@ -191,8 +191,12 @@ async function loadProfile() {
     if (p.resume_link) document.getElementById('resume-btn').href = p.resume_link;
 
     if (p.profile_image) {
+        const imgUrl = p.profile_image.startsWith('http')
+        ? p.profile_image
+        : `https://portfolio-cms-flask.onrender.com${p.profile_image}`;
+
       document.getElementById('about-img').innerHTML =
-        `<img src="${p.profile_image}" alt="${p.name}">`;
+        `<img src="${imgUrl}" alt="${p.name}">`;
     }
 
     // social links
