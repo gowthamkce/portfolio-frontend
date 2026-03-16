@@ -25,9 +25,9 @@ async function req(method, path, body) {
   const opts = { method, credentials: 'include', headers: { 'Content-Type': 'application/json' } };
   if (body) opts.body = JSON.stringify(body);
   const r = await fetch(API + path, opts);
-  const data = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
-  return data;
+  const json = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(json.error || `HTTP ${r.status}`);
+  return json.data !== undefined ? json.data : json;  // ← unwraps .data automatically
 }
 const GET    = (p)    => req('GET',    p);
 const POST   = (p, b) => req('POST',   p, b);
